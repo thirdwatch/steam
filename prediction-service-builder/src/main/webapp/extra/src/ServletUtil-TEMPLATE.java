@@ -70,7 +70,14 @@ class ServletUtil {
     try {
       Class<?> clazz = Class.forName(modelName);
       GenModel rawModel = (GenModel) clazz.newInstance();
-      model = new EasyPredictModelWrapper(rawModel);
+
+      EasyPredictModelWrapper model = new EasyPredictModelWrapper(
+              new EasyPredictModelWrapper.Config()
+                      .setModel(rawModel)
+                      .setConvertUnknownCategoricalLevelsToNa(true)
+      );
+
+//      model = new EasyPredictModelWrapper(rawModel);
       models.put(modelName, model);
       logger.debug("added model {}  new size {}", modelName, models.size());
 
@@ -88,7 +95,12 @@ class ServletUtil {
     try {
       String fileName = servletPath + File.separator + modelName + ".zip";
       GenModel rawModel = REPLACE_THIS_WITH_MODEL;
-      model = new EasyPredictModelWrapper(rawModel);
+//      model = new EasyPredictModelWrapper(rawModel);
+      EasyPredictModelWrapper model = new EasyPredictModelWrapper(
+              new EasyPredictModelWrapper.Config()
+                      .setModel(rawModel)
+                      .setConvertUnknownCategoricalLevelsToNa(true)
+      );
       models.put(modelName, model);
       logger.info("added model {}  new size {}", modelName, models.size());
     }
